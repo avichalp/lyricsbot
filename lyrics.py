@@ -8,11 +8,6 @@ import lxml.cssselect
 from random import randint
 
 def lyricwikicase(s):
-	"""Return a string in LyricWiki case.
-	Substitutions are performed as described at 
-	<http://lyrics.wikia.com/LyricWiki:Page_Names>.
-	Essentially that means capitalizing every word and substituting certain 
-	characters."""
 
 	words = s.split()
 	newwords = []
@@ -21,7 +16,7 @@ def lyricwikicase(s):
 	s = "_".join(newwords)
 	s = s.replace("<", "Less_Than")
 	s = s.replace(">", "Greater_Than")
-	s = s.replace("#", "Number_") # FIXME: "Sharp" is also an allowed substitution
+	s = s.replace("#", "Number_") 
 	s = s.replace("[", "(")
 	s = s.replace("]", ")")
 	s = s.replace("{", "(")
@@ -30,15 +25,11 @@ def lyricwikicase(s):
 	return s
 
 def lyricwikipagename(artist, title):
-	"""Return the page name for a set of lyrics given the artist and 
-	title"""
-
+	
 	return "%s:%s" % (lyricwikicase(artist), lyricwikicase(title))
 
 def lyricwikiurl(artist, title, edit=False, fuzzy=False):
-	"""Return the URL of a LyricWiki page for the given song, or its edit 
-	page"""
-
+	
 	if fuzzy:
 		base = "http://lyrics.wikia.com/index.php?search="
 		pagename = artist + ':' + title
@@ -61,11 +52,7 @@ def lyricwikiurl(artist, title, edit=False, fuzzy=False):
 	return base + pagename
 
 def getlyrics(artist, title, fuzzy=False):
-	"""Get and return the lyrics for the given song.
-	Raises an IOError if the lyrics couldn't be found.
-	Raises an IndexError if there is no lyrics tag.
-	Returns False if there are no lyrics (it's instrumental)."""
-
+	
 	try:
 		doc = lxml.html.parse(lyricwikiurl(artist, title, fuzzy=fuzzy))
 	except IOError:
