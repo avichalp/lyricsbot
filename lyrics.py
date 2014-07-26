@@ -7,6 +7,7 @@ import lxml.html
 import lxml.cssselect
 from random import randint
 
+
 def lyricwikicase(s):
 
 	words = s.split()
@@ -28,33 +29,11 @@ def lyricwikipagename(artist, title):
 	
 	return "%s:%s" % (lyricwikicase(artist), lyricwikicase(title))
 
-def lyricwikiurl(artist, title, edit=False, fuzzy=False):
-	
-	if fuzzy:
-		base = "http://lyrics.wikia.com/index.php?search="
-		pagename = artist + ':' + title
-		if not edit:
-			url = base + pagename
-			doc = lxml.html.parse(url)
-			return doc.docinfo.URL
-	else:
-		base = "http://lyrics.wikia.com/"
-		pagename = lyricwikipagename(artist, title)
-	
-	if edit:
-		if fuzzy:
-			url = base + pagename
-			doc = lxml.html.parse(url)
-			return doc.docinfo.URL + "&action=edit"
-		else:
-			return base + "index.php?title=%s&action=edit" % pagename
-	
-	return base + pagename
 
-def getlyrics(artist, title, fuzzy=False):
+def getlyrics(artist, fuzzy=False):
 	
 	try:
-		doc = lxml.html.parse(lyricwikiurl(artist, title, fuzzy=fuzzy))
+		doc = lxml.html.parse(get_songs(artist))
 	except IOError:
 		raise
 
@@ -81,6 +60,33 @@ def getlyrics(artist, title, fuzzy=False):
 	#return "".join(lyrics).strip()
 	return lyrics
 
+def get_songs(artist):
+
+	url = "http://lyrics.wikia.com/api.php?func=getArtist&artist="+ lyricwikicase(artist)
+	
+	try:
+		disco = lxml.html.parse(url)
+		print disco.docinfo.URL
+	except IOError:
+		raise
+
+	try:
+		albums_songs = {}
+		ul= disco.getroot().cssselect('.albums')
+		for i in range(len(ul[0])):
+			album_name = ul[0][i][0].text
+			albums_songs[album_name] = ul[0][i][2]
+		
+		key= albums_songs.keys()[randint(0,len(albums_songs.keys())-1)]
+		return albums_songs[key][0][0].get('href')
+	
+	except IndexError:
+		raise
+
+		
+	#print songs
+	#return song 
+
 def create_tweet(raw):	
 	tweet=[]		
 	for x in raw:
@@ -92,13 +98,12 @@ def create_tweet(raw):
 	return tweet
 
 if __name__ == '__main__':
+		
+	artist = 'tool'
+	#get_songs('pink floyd')
+	#song = 'russia on ice'
 	
-	
-	artist = 'porcupine tree'
-	
-	song = 'russia on ice'
-	
-	raw_tweet = filter(lambda y: y != '\n', getlyrics(artist,song,False))
+	raw_tweet = filter(lambda y: y != '\n', getlyrics(artist,False))
 	tweet_collection = []
 	
 	while raw_tweet:
