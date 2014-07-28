@@ -21,7 +21,9 @@ def lyricwikicase(s):
 	s = urllib.urlencode([(0, s)])[2:]
 	return s
 
+
 def get_random_artist():
+	
 	artist_list = []
 	artist_file = open('artist.txt', 'r+')
 
@@ -31,27 +33,20 @@ def get_random_artist():
 	artist = artist_list[randint(0,len(artist_list)-1)]
 	return lyricwikicase(artist)
 
-def create_tweet(raw):	
-	tweet=[]		
-	for x in raw:
-		if len(str(tweet))<140:
-			tweet.append(x)
-		if len(str(tweet))>140:
+	
+def create_tweet(raw_lyrics):
+	
+	tweet = []
+	for _ in raw_lyrics:
+		if len(str(tweet)) < 140:
+			tweet.append(_)		
+		if len(str(tweet)) > 140:
 			tweet.pop(-1)
 			break
+
 	return tweet
-
-def process_tweet(raw_tweet):
-	tweet_collection = []
-	while raw_tweet:
-		c= create_tweet(raw_tweet)
-		tweet_collection.append(c)
-		for _ in c:
-			if _ in raw_tweet:
-				raw_tweet.pop(raw_tweet.index( _ ))
-
-	return tweet_collection
-
+	
+	
 def write_tweet(tweet):
 	
 	filename = open('tweet_buffer.txt','w+')
@@ -60,22 +55,31 @@ def write_tweet(tweet):
 
 
 def tweet_lyrics():
-	artist = get_random_artist()
-	#genrates lyrics		
-	raw_tweet = filter(lambda y: y != '\n', lyrics.getlyrics(artist,False))
-	tweet_collection = process_tweet(raw_tweet)
 	
+	artist = get_random_artist()
+	ly_tweet_collection = []
+	
+	#genrate lyrics		
+	raw_lyrics = filter(lambda y: y != '\n', lyrics.getlyrics(artist,False))
+	
+	#collecting all probable tweets and removing them from raw_lyrics
+	while raw_lyrics:
+		tweet = create_tweet(raw_lyrics)
+		ly_tweet_collection.append(tweet)
+		raw_lyrics = [x for x in tweet if x not in raw_lyrics ]
+
 	# writes a random tweet from collectoion to txt file
-	tweet = tweet_collection[randint(0,len(tweet_collection)-1)]	
+	tweet = ly_tweet_collection[randint(0,len(ly_tweet_collection)-1)]	
 	if os.stat('tweet_buffer.txt')[6]==0:
 		write_tweet(tweet)
 	else:
 		filename=open('tweet_buffer.txt','w')
 		filename.close()
 		print 'file was not empty'
-		write_tweet(tweet)			
+		write_tweet(tweet)
 
 def tweet_quotes():
+	
 	#genrates quotes
 	raw_quote = quotes.get_random_quote()
 	if os.stat('tweet_buffer.txt')[6]==0:
@@ -85,6 +89,7 @@ def tweet_quotes():
 		filename.close()
 		print 'file was not empty'
 		write_tweet(raw_quote)	 
+
 	
 if __name__ == '__main__':
 	
