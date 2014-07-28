@@ -1,0 +1,43 @@
+import tweepy
+import os
+
+CONSUMER_KEY = 'DTlyBz21oF0boMDeKIywAepUt'
+CONSUMER_SECRET = 'LfQXDaoaNNWvET9AqP71GpTl1ZzFfvBmF969FFyNeCcIpfZ82q'
+ACCESS_KEY = '109061242-b1O2Q0l4RKnutFDl0mhUZ7Viu2WRILRrf4X9mZjV'
+ACCESS_SECRET = 'LOO8s57swGTUHdIujfQgcNUl3qTzBkXKQQmLI71y5sPcp'
+
+def auth():
+	auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+	auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
+	api = tweepy.API(auth)
+	return api
+ 
+def get_tweet():
+	filename = open('tweet_buffer.txt','r')
+	f = filename.readlines()
+	filename.close()
+	tweet = [] 
+	for line in f:
+		tweet.append(line)
+		
+	tweet = "".join(tweet)
+	return tweet
+
+def post_tweet(api,tweet):
+	api.update_status(tweet)
+	#print tweet
+
+def flush():
+	if not os.stat('tweet_buffer.txt')[6]==0:
+		filename=open('tweet_buffer.txt','w')
+		filename.close()
+
+	
+if __name__ == '__main__':
+	
+	api = auth()
+	tweet = get_tweet()
+	post_tweet(api,tweet)
+	flush()
+		
+	
