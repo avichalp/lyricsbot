@@ -10,7 +10,7 @@ def get_song_name(artist):
 		disco = lxml.html.parse(url)
 		
 	except IOError:
-		raise
+		print ' could not connect to lyrics wiki(artist page). '
 
 	try:
 		albums_songs = {}
@@ -24,18 +24,31 @@ def get_song_name(artist):
 		return albums_songs[key][0][0].get('href')
 	
 	except IndexError:
-		raise
+		print 'connection successful but artist-feed(discography) is not in proper format.'
+	
+	except TypeError:
+		print 'connection successful but artist-feed(discograpy) is not in proper type.'
 
 def getlyrics(artist, fuzzy=False):
 	
 	try:
 		doc = lxml.html.parse(get_song_name(artist))
+	
 	except IOError:
+		print 'could not connect to lyrics wiki(discogarphy page of an artist).'
 		raise
-
+	except TypeError:
+		print 'could not connect to the url'
+		raise
+	
 	try:
 		lyricbox = doc.getroot().cssselect(".lyricbox")[0]
+	
 	except IndexError:
+		print 'connection successful but album-feed is not in proper format.'
+		raise
+	except TypeError:
+		print 'connection successful but album-feed is not in proper type.'
 		raise
 
 	# look for a sign that it's instrumental
