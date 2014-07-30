@@ -14,7 +14,8 @@ def create_tweet(raw_lyrics):
 	
 def write_tweet(tweet):
 	
-	filename = open('tweet_buffer.txt','w+')
+	filename = open('tweet_buffer.txt','w')
 	for some in tweet:
 		filename.write(some+'\n')
+	filename.close()
 
