@@ -1,7 +1,7 @@
-from controllers import Lyrics,Quotes
+from controllers import *
 from random import randint
 	
-Lyrics().tweet_lyrics() if randint(0,1) == 0 else Quotes().tweet_quotes()		
+tweet_lyrics() if randint(0,1) == 0 else tweet_quotes()		
 	
 	
 	

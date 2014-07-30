@@ -1,4 +1,3 @@
-
 def create_tweet(raw_lyrics):
 	
 	tweet = []
