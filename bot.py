@@ -1,3 +1,4 @@
+import utils
 import tweepy
 import os
 
@@ -19,13 +20,9 @@ def get_tweet():
 	return tweet
 
 def post_tweet(api,tweet):
-	api.update_status(tweet)
-	#print tweet
+	#api.update_status(tweet)
+	print tweet
 
-def flush():
-	if not os.stat('tweet_buffer.txt')[6]==0:
-		filename=open('tweet_buffer.txt','w')
-		filename.close()
 
 	
 if __name__ == '__main__':
@@ -42,6 +39,6 @@ if __name__ == '__main__':
 	api = auth()
 	tweet = get_tweet()
 	post_tweet(api,tweet)
-	flush()
-		
+	utils.flush()
+
 	
