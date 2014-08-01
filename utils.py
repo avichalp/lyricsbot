@@ -1,5 +1,14 @@
 import urllib
 import os
+from random import randint
+
+def get_random_artist():
+		
+	artist_list = []
+	for line in open('artist.txt', 'r+'):
+		artist_list.append(line)
+
+	return lyricwikicase(artist_list[randint(0,len(artist_list)-1)])
 
 
 def create_tweet(raw_lyrics):
