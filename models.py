@@ -2,6 +2,29 @@ import lxml.html
 import lxml.cssselect
 from random import randint
 
+
+def write_tweet(tweet):
+	
+	filename = open('tweet_buffer.txt','w')
+	for some in tweet:
+		filename.write(some+'\n')
+	filename.close()
+
+
+
+def get_random_artist():
+	
+	"""chose a random artist from list of artists in the text file """
+	
+	artist_list = []
+	artist_file = open('artist.txt', 'r+')
+
+	for line in artist_file:
+		artist_list.append(line)
+
+	return utils.lyricwikicase(artist_list[randint(0,len(artist_list)-1)])
+
+
 def get_random_quote():
 
 	url = "http://www.iheartquotes.com/api/v1/random?max_characters=140&show_source=0&show_permalink=0"
@@ -12,12 +35,17 @@ def get_random_quote():
 	except IOError:
 		raise
 	
-	quote = quote.getroot()[0][0].text
+	try:
+		quote = quote.getroot()[0][0].text
+	
+	except IndexError:
+		raise
+
 	raw_qoute = quote.split('\n')
 	raw_qoute.pop(-2)
 	return raw_qoute
 
-
+	
 def get_song_name(artist):
 
 	url = "http://lyrics.wikia.com/api.php?func=getArtist&artist="+artist
@@ -30,7 +58,7 @@ def get_song_name(artist):
 
 	try:
 		albums_songs = {}
-		ul= disco.getroot().cssselect('.albums')
+	ul= disco.getroot().cssselect('.albums')
 		
 		for i in range(len(ul[0])):
 			album_name = ul[0][i][0].text
