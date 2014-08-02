@@ -1,13 +1,14 @@
 import utils
 import tweepy
 import os
+from modles import Tweet,Lyrics,Quotes
 
 def auth():
 	auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 	auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 	api = tweepy.API(auth)
 	return api
- 
+
 def get_tweet():
 	filename = open('tweet_buffer.txt','r')
 	f = filename.readlines()
@@ -18,6 +19,7 @@ def get_tweet():
 		
 	tweet = "".join(tweet)
 	return tweet
+
 
 def post_tweet(api,tweet):
 	#api.update_status(tweet)

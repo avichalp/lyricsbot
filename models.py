@@ -8,13 +8,27 @@ class Tweet(object):
 	
 	__metaclass__ = abc.ABCMeta
 	
+	_tweet = ""
+	
 	def write_tweet(self,tweet):
 			
 		filename = open('tweet_buffer.txt','w')
 		for some in tweet:
 			filename.write(some+'\n')
 		filename.close()
-	
+		
+	"""def get_tweet(self):
+		
+		filename = open('tweet_buffer.txt','r')
+		f = filename.readlines()
+		filename.close()
+		tweet = []
+		for line in f:
+			tweet.append(line)
+
+		tweet = "".join(tweet)
+	"""				
+		
 	@abc.abstractmethod	
 	def api_call(self,url):
 		pass
@@ -45,7 +59,8 @@ class Lyrics(Tweet):
 		
 		except IOError:
 			print ' could not connect to lyrics wiki(artist page). '
-
+			raise
+			
 		albums_songs = {}
 		ul= disco.getroot().cssselect('.albums')
 		
