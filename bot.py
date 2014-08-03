@@ -1,7 +1,8 @@
 import utils
 import tweepy
 import os
-from modles import Tweet,Lyrics,Quotes
+import redis
+from models import Tweet,Lyrics,Quotes
 
 def auth():
 	auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
@@ -10,16 +11,13 @@ def auth():
 	return api
 
 def get_tweet():
-	filename = open('tweet_buffer.txt','r')
-	f = filename.readlines()
-	filename.close()
+	
 	tweet = [] 
-	for line in f:
-		tweet.append(line)
+	redis_server = redis.Redis('localhost')
+	fetched = redis_server.get('tweet')
+	
+	return fetched
 		
-	tweet = "".join(tweet)
-	return tweet
-
 
 def post_tweet(api,tweet):
 	#api.update_status(tweet)

@@ -2,6 +2,7 @@ import lxml.html
 import lxml.cssselect
 import abc
 import utils
+import redis
 from random import randint
 
 class Tweet(object):
@@ -11,27 +12,18 @@ class Tweet(object):
 	_tweet = ""
 	
 	def write_tweet(self,tweet):
+		
+		redis_server = redis.Redis('localhost')
+		t = ""
+		for _ in tweet:
+			t = t + str(_)
 			
-		filename = open('tweet_buffer.txt','w')
-		for some in tweet:
-			filename.write(some+'\n')
-		filename.close()
-		
-	"""def get_tweet(self):
-		
-		filename = open('tweet_buffer.txt','r')
-		f = filename.readlines()
-		filename.close()
-		tweet = []
-		for line in f:
-			tweet.append(line)
+		redis_server.set('tweet',t)
 
-		tweet = "".join(tweet)
-	"""				
-		
 	@abc.abstractmethod	
 	def api_call(self,url):
 		pass
+
 
 class Quotes(Tweet):
 	
