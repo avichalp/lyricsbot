@@ -17,15 +17,14 @@ def tweet_lyrics():
 	ly.api_call()
 	
 	raw_lyrics = filter(lambda y: y != '\n', ly.getlyrics(False))
-	count = 0
+	
 	while raw_lyrics:
 		tweet = utils.create_tweet(raw_lyrics)
 		#ly_tweet_collection.append(tweet)
 		redis_server.rpush('tweet_collection',tweet)
-		count+=1
 		raw_lyrics = [x for x in tweet if x not in raw_lyrics ]
 
-	ready_tweet = redis_server.lindex('tweet_collection',randint(0,count-1))
+	ready_tweet = redis_server.lindex('tweet_collection',randint(0,len(ly_tweet_collection)-1))
 
 	ly.write_tweet(ready_tweet)
 

@@ -16,7 +16,7 @@ class Tweet(object):
 		redis_server = redis.Redis('localhost')
 		t = ""
 		for _ in tweet:
-			t = t + str( _ )
+			t = t + str(_)
 		print t, type(t)	
 		redis_server.set('tweet',t)
 
