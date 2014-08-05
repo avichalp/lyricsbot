@@ -5,23 +5,20 @@ import utils
 import redis
 from random import randint
 
+
 class Tweet(object):
 	
 	__metaclass__ = abc.ABCMeta
-	
-	_tweet = ""
-	
+			
 	def write_tweet(self,tweet):
+		
 		print tweet
-		redis_server = redis.Redis('localhost')
-		t = ""
-		for _ in tweet:
-			t = t + str( _ )
-		print t, type(t)	
-		redis_server.set('tweet',t)
+		redis.Redis('localhost').set('tweet', "".join(tweet))
+
 
 	@abc.abstractmethod	
 	def api_call(self,url):
+		
 		pass
 
 
@@ -39,10 +36,13 @@ class Quotes(Tweet):
 	
 		return quote
 
+#class Meme(Tweet):
+	#_url = ""
+
 class Lyrics(Tweet):
 			
-	artist_url =  "http://lyrics.wikia.com/api.php?func=getArtist&artist="+ utils.get_random_artist()
-	song_url = ""
+	_artist_url =  "http://lyrics.wikia.com/api.php?func=getArtist&artist="+ utils.get_random_artist()
+	_song_url = ""
 	
 	def api_call(self):
 	

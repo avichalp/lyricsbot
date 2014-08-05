@@ -5,18 +5,10 @@ import redis
 from models import Tweet,Lyrics,Quotes
 
 def auth():
-	auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-	auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
-	api = tweepy.API(auth)
-	return api
+	return tweepy.API(tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET).set_access_token(ACCESS_KEY, ACCESS_SECRET))
 
 def get_tweet():
-	
-	tweet = [] 
-	redis_server = redis.Redis('localhost')
-	fetched = redis_server.get('tweet')
-	
-	return fetched
+	return  redis.Redis('localhost').get('tweet')
 		
 
 def post_tweet(tweet):
