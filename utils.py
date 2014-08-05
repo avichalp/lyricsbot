@@ -35,10 +35,8 @@ def lyrics_tweet_collection(raw_lyrics):
 	redis_server = redis.Redis('localhost')
 
 	while raw_lyrics:
-		tweet = create_tweet(raw_lyrics)
-		for x in tweet:
-			t=t+str(x)+'\n'	
-		redis_server.rpush('tweet_collection',t)
+		tweet = create_tweet(raw_lyrics)	
+		redis_server.rpush('tweet_collection',"\n".join(tweet))
 		raw_lyrics = [x for x in tweet if x not in raw_lyrics ]
 
 
