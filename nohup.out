@@ -104,3 +104,14 @@ nohup: redis_server: No such file or directory
 [674] 05 Aug 19:36:46.461 # Server started, Redis version 2.8.13
 [674] 05 Aug 19:36:46.474 * DB loaded from disk: 0.014 seconds
 [674] 05 Aug 19:36:46.475 * The server is now ready to accept connections on port 6379
+[674] 05 Aug 20:36:47.053 * 1 changes in 3600 seconds. Saving...
+[674] 05 Aug 20:36:47.054 * Background saving started by pid 826
+[826] 05 Aug 20:36:47.056 * DB saved on disk
+[674] 05 Aug 20:36:47.154 * Background saving terminated with success
+[935] 05 Aug 21:06:11.747 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+[935] 05 Aug 21:06:11.751 * Increased maximum number of open files to 10032 (it was originally set to 256).
+[935] 05 Aug 21:06:11.752 # Creating Server TCP listening socket *:6379: bind: Address already in use
+[674] 05 Aug 21:36:48.060 * 1 changes in 3600 seconds. Saving...
+[674] 05 Aug 21:36:48.061 * Background saving started by pid 1053
+[1053] 05 Aug 21:36:48.064 * DB saved on disk
+[674] 05 Aug 21:36:48.162 * Background saving terminated with success

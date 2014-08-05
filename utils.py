@@ -1,5 +1,6 @@
 import urllib
 import os
+import redis
 from random import randint
 
 def get_random_artist():
@@ -30,11 +31,14 @@ def create_tweet(raw_lyrics):
 def lyrics_tweet_collection(raw_lyrics):
 	
 	""" create and put collection of tweets in data store"""
-
+	t=""
 	redis_server = redis.Redis('localhost')
+
 	while raw_lyrics:
 		tweet = create_tweet(raw_lyrics)
-		redis_server.rpush('tweet_collection',tweet)
+		for x in tweet:
+			t=t+str(x)+'\n'	
+		redis_server.rpush('tweet_collection',t)
 		raw_lyrics = [x for x in tweet if x not in raw_lyrics ]
 
 

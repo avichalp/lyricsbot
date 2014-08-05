@@ -15,7 +15,7 @@ def get_tweet():
 
 def post_tweet(tweet):
 	#api.update_status(tweet)
-	print tweet
+	print tweet, type(tweet)
 
 
 	

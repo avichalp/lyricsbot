@@ -19,7 +19,7 @@ def tweet_lyrics():
 	utils.lyrics_tweet_collection(raw_lyrics)
 	
 	#TODO: get the length of the array from redis server and replace it with count
-	ly.write_tweet(redis_server.lindex('tweet_collection',randint(0,count-1)))
+	ly.write_tweet(redis_server.lindex('tweet_collection',randint(0,redis_server.llen('tweet_collection')-1)))
 
 					 	
 def tweet_quotes():

@@ -12,9 +12,8 @@ class Tweet(object):
 			
 	def write_tweet(self,tweet):
 		
-		print tweet
-		redis.Redis('localhost').set('tweet', "".join(tweet))
-
+		redis.Redis('localhost').set('tweet', tweet)
+		
 
 	@abc.abstractmethod	
 	def api_call(self,url):
@@ -41,8 +40,8 @@ class Quotes(Tweet):
 
 class Lyrics(Tweet):
 			
-	_artist_url =  "http://lyrics.wikia.com/api.php?func=getArtist&artist="+ utils.get_random_artist()
-	_song_url = ""
+	artist_url =  "http://lyrics.wikia.com/api.php?func=getArtist&artist="+ utils.get_random_artist()
+	song_url = ""
 	
 	def api_call(self):
 	
