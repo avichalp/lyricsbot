@@ -12,20 +12,19 @@ from random import randint
 def tweet_lyrics():
 	
 	redis_server = redis.Redis('localhost')	
-	ly = Lyrics()
-	ly.api_call()
-	raw_lyrics = filter(lambda y: y != '\n', ly.getlyrics(False))
+	lyrics = Lyrics()
+	lyrics.api_call()
+	raw_lyrics = filter(lambda y: y != '\n', lyrics.getlyrics(False))
 	
 	utils.lyrics_tweet_collection(raw_lyrics)
 	
-	#TODO: get the length of the array from redis server and replace it with count
-	ly.write_tweet(redis_server.lindex('tweet_collection',randint(0,redis_server.llen('tweet_collection')-1)))
+	lyrics.write_tweet(redis_server.lindex('tweet_collection',randint(0,redis_server.llen('tweet_collection')-1)))
 
 					 	
 def tweet_quotes():
 
 
-	q = Quotes()
-	q.write_tweet(q.api_call())
+	quote = Quotes()
+	quote.write_tweet("\n".join(quote.api_call()))
 			
 	

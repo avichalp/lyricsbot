@@ -10,7 +10,7 @@ def auth():
 def get_tweet():
 	redis_server =  redis.Redis('localhost')
 	tweet = redis_server.get('tweet')
-	redis_server.flushdb()
+	redis_server.delete('tweet')
 	return tweet
 
 def post_tweet(tweet):

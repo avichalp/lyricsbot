@@ -13,8 +13,8 @@ class Tweet(object):
 	def write_tweet(self,tweet):
 		
 		redis.Redis('localhost').set('tweet', tweet)
-		
 
+		
 	@abc.abstractmethod	
 	def api_call(self,url):
 		
@@ -35,8 +35,7 @@ class Quotes(Tweet):
 	
 		return quote
 
-#class Meme(Tweet):
-	#_url = ""
+
 
 class Lyrics(Tweet):
 			
@@ -61,7 +60,8 @@ class Lyrics(Tweet):
 		
 		key= albums_songs.keys()[randint(0,len(albums_songs.keys())-1)]
 		self.song_url = albums_songs[key][0][0].get('href')
-		return albums_songs[key][0][0].get('href')
+		
+		return
 
 
 
