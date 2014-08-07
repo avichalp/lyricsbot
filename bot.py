@@ -21,14 +21,14 @@ def post_tweet(tweet):
 	
 if __name__ == '__main__':
 		
-	#access_file = open('/home/avichal/devlopment/twitter_access.txt','r')
-	#f= access_file.readlines()
-	#access_file.close()
+	access_file = open('/home/avichal/devlopment/twitter_access.txt','r')
+	f= access_file.readlines()
+	access_file.close()
 
-	#CONSUMER_KEY = f[0].strip('\n') 
-	#CONSUMER_SECRET = f[1].strip('\n')
-	#ACCESS_KEY = f[2].strip('\n')
-	#ACCESS_SECRET = f[3].strip('\n')
+	CONSUMER_KEY = f[0].strip('\n') 
+	CONSUMER_SECRET = f[1].strip('\n')
+	ACCESS_KEY = f[2].strip('\n')
+	ACCESS_SECRET = f[3].strip('\n')
 
 	#api = auth()
 	tweet = get_tweet()
