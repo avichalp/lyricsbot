@@ -22,8 +22,7 @@ def post_tweet(tweet):
 if __name__ == '__main__':
 		
 	#api = utils.auth()
-	tweet = get_tweet()
-	post_tweet(tweet)
+	post_tweet(get_tweet())
 	
 
 	

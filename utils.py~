@@ -37,9 +37,6 @@ def create_tweet(raw_lyrics):
 
 	tweet = []
 	for _ in raw_lyrics:
-		
-		if len(str(tweet)) == 140:
-			break
 		if len(str(tweet)) < 140:
 			tweet.append(_)		
 		if len(str(tweet)) > 140:
@@ -52,7 +49,6 @@ def create_tweet(raw_lyrics):
 def lyrics_tweet_collection(raw_lyrics):
 	
 	""" create and put collection of tweets in data store"""
-	
 	t=""
 	redis_server = redis.Redis('localhost')
 
