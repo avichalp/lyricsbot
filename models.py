@@ -8,6 +8,8 @@ from random import randint
 
 class Tweet(object):
 	
+	""" abstract class to represent a tweet"""
+	
 	__metaclass__ = abc.ABCMeta
 			
 	def write_tweet(self,tweet):
@@ -23,12 +25,14 @@ class Tweet(object):
 
 class Quotes(Tweet):
 	
-	url =  "http://www.iheartquotes.com/api/v1/random?max_characters=140&show_source=0&show_permalink=0"
+	""" this class exetnds Tweet class and implements its api_call method  """
+
+	__url =  "http://www.iheartquotes.com/api/v1/random?max_characters=140&show_source=0&show_permalink=0"
 
 	def api_call(self):
 
 		try:
-			quote = lxml.html.parse(self.url).getroot()[0][0].text.split('\n')[:-2]
+			quote = lxml.html.parse(self.__url).getroot()[0][0].text.split('\n')[:-2]
 			
 		except IOError:
 			raise
@@ -38,14 +42,16 @@ class Quotes(Tweet):
 
 
 class Lyrics(Tweet):
-			
-	artist_url =  "http://lyrics.wikia.com/api.php?func=getArtist&artist="+ utils.get_random_artist()
-	song_url = ""
+		
+	"""this class extends Tweet class and impements its api_call method"""
+
+	__artist_url =  "http://lyrics.wikia.com/api.php?func=getArtist&artist="+ utils.get_random_artist()
+	__song_url = ""
 	
 	def api_call(self):
 	
 		try:
-			disco = lxml.html.parse(self.artist_url)
+			disco = lxml.html.parse(self.__artist_url)
 		
 		except IOError:
 			print ' could not connect to lyrics wiki(artist page). '
@@ -59,7 +65,7 @@ class Lyrics(Tweet):
 			albums_songs[album_name] = ul[0][i][2]
 		
 		key= albums_songs.keys()[randint(0,len(albums_songs.keys())-1)]
-		self.song_url = albums_songs[key][0][0].get('href')
+		self.__song_url = albums_songs[key][0][0].get('href')
 		
 		return
 
@@ -68,7 +74,7 @@ class Lyrics(Tweet):
 	def getlyrics(self, fuzzy=False):
 	
 		try:
-			doc = lxml.html.parse(self.song_url)
+			doc = lxml.html.parse(self.__song_url)
 	
 		except IOError:
 			raise

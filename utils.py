@@ -7,8 +7,10 @@ from random import randint
 
 
 def auth():
-
-	access_file = open('/home/avichal/devlopment/twitter_access.txt','r')
+	
+	""" fetches authentication details from a file. use them to login twitter """
+	
+ 	access_file = open('/home/avichal/devlopment/twitter_access.txt','r')
 	f= access_file.readlines()
 	access_file.close()
 
@@ -36,13 +38,14 @@ def create_tweet(raw_lyrics):
 	""" crate a tweet of less than or equal to 140 characters  """
 
 	tweet = []
+
 	for _ in raw_lyrics:
-		
-		if len(str(tweet)) == 140:
+		tweet.append(_)
+		if len(str(tweet)) == 100:
 			break
-		if len(str(tweet)) < 140:
-			tweet.append(_)		
-		if len(str(tweet)) > 140:
+		if len(str(tweet)) < 100:
+			continue	
+		if len(str(tweet)) > 100:
 			tweet.pop(-1)
 			break
 
@@ -53,7 +56,6 @@ def lyrics_tweet_collection(raw_lyrics):
 	
 	""" create and put collection of tweets in data store"""
 	
-	t=""
 	redis_server = redis.Redis('localhost')
 
 	while raw_lyrics:

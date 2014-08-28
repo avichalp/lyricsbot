@@ -28,6 +28,3 @@ def tweet_quotes():
 	quote.write_tweet("\n".join(quote.api_call()))
 			
 	
-if __name__ == '__main__' :
-	
-	tweet_quotes() if randint(0,1) == 0 else tweet_lyrics()
