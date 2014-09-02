@@ -11,6 +11,7 @@ from random import randint
 
 def tweet_lyrics():
 	
+	
 	redis_server = redis.Redis('localhost')	
 	lyrics = Lyrics()
 	lyrics.api_call()
@@ -23,8 +24,12 @@ def tweet_lyrics():
 					 	
 def tweet_quotes():
 
-
+	"""intantiate quote class and writes tweet """
+	
 	quote = Quotes()
 	quote.write_tweet("\n".join(quote.api_call()))
 			
 	
+if __name__ == '__main__' :
+	
+	tweet_quotes() if randint(0,1) == 0 else tweet_lyrics()

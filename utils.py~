@@ -35,7 +35,7 @@ def get_random_artist():
 
 def create_tweet(raw_lyrics):
 	
-	""" crate a tweet of less than or equal to 100 characters  """
+	""" crate a tweet of less than or equal to 140 characters  """
 
 	tweet = []
 

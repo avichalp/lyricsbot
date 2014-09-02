@@ -14,15 +14,11 @@ class Tweet(object):
 			
 	def write_tweet(self,tweet):
 		
-		""" a method to write tweets on Redis data-store """
-		
 		redis.Redis('localhost').set('tweet', tweet)
 
 		
 	@abc.abstractmethod	
 	def api_call(self,url):
-
-		""""abstract method to make a api-call """
 		
 		pass
 
@@ -34,8 +30,6 @@ class Quotes(Tweet):
 	__url =  "http://www.iheartquotes.com/api/v1/random?max_characters=140&show_source=0&show_permalink=0"
 
 	def api_call(self):
-
-		"""api-call method implementation for Qoutes class """
 
 		try:
 			quote = lxml.html.parse(self.__url).getroot()[0][0].text.split('\n')[:-2]
@@ -55,8 +49,6 @@ class Lyrics(Tweet):
 	__song_url = ""
 	
 	def api_call(self):
-
-		"""api-call method implementataion of Lyrics class """
 	
 		try:
 			disco = lxml.html.parse(self.__artist_url)
@@ -80,8 +72,6 @@ class Lyrics(Tweet):
 
 
 	def getlyrics(self, fuzzy=False):
-
-		""" method for html parsing of lyrics page and fetchinhg lyrics """
 	
 		try:
 			doc = lxml.html.parse(self.__song_url)
