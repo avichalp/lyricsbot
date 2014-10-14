@@ -4,20 +4,14 @@ import os
 import redis
 from random import randint
 
-
-
 def auth():
 	
 	""" fetches authentication details from a file. use them to login twitter """
 	
- 	access_file = open('/home/avichal/devlopment/twitter_access.txt','r')
-	f= access_file.readlines()
-	access_file.close()
-
-	CONSUMER_KEY = f[0].strip('\n') 
-	CONSUMER_SECRET = f[1].strip('\n')
-	ACCESS_KEY = f[2].strip('\n')
-	ACCESS_SECRET = f[3].strip('\n')
+	CONSUMER_KEY = "..." 
+	CONSUMER_SECRET = "..."
+	ACCESS_KEY = "..."
+	ACCESS_SECRET = "..."
 	
 	return tweepy.API(tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET).set_access_token(ACCESS_KEY, ACCESS_SECRET))
 
