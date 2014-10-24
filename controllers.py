@@ -1,6 +1,5 @@
 import models
 import os
-import tweetprocessor
 import abc
 import utils
 import models
@@ -15,14 +14,27 @@ def tweet_lyrics():
 	
 	redis_server = redis.Redis('localhost')	
 	lyrics = Lyrics()
-	lyrics.api_call()
-	raw_lyrics = filter(lambda y: y != '\n', lyrics.getlyrics(False))
 	
-	#makes a collection of tweets from raw lyrics and put collection in redis-store
-	utils.lyrics_tweet_collection(raw_lyrics)
+	try :
+		lyrics.api_call()		
 	
-	#randomly extract a tweet from collection in redis and call writetweet from Lyrics class
-	lyrics.write_tweet(redis_server.lindex('tweet_collection',randint(0,redis_server.llen('tweet_collection')-1)))
+	except IOError :
+		print 'could not connect to lyrics wiki(artist page)'
+	
+	else :
+		try:
+			raw_lyrics = filter(lambda y: y != '\n', lyrics.getlyrics(False))
+		except IndexError:
+			print 'connection successful but albums_feed is not in proper format'
+		except TypeError:
+			print 'connection successful but album-feed is not in proper type.'
+		else :
+
+			# makes a collection of tweets from raw lyrics and put collection in redis-store
+			utils.lyrics_tweet_collection(raw_lyrics)
+	
+			# randomly extract a tweet from collection in redis and call writetweet from Lyrics class
+			lyrics.write_tweet(redis_server.lindex('tweet_collection',randint(0,redis_server.llen('tweet_collection')-1)))
 
 					 	
 def tweet_quotes():
@@ -30,8 +42,11 @@ def tweet_quotes():
 	"""intantiate quote class and writes tweet """
 	
 	quote = Quotes()
-	quote.write_tweet("\n".join(quote.api_call()))
-			
+	try:
+		quote.write_tweet("\n".join(quote.api_call()))
+	except IOError:
+		print 'cannnot fetch the quote'
+
 	
 if __name__ == '__main__' :
 	
