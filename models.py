@@ -7,6 +7,7 @@ from random import randint
 
 class Tweet(object):
 	
+
 	""" abstract class to represent a tweet"""
 	
 	__metaclass__ = abc.ABCMeta
@@ -28,6 +29,7 @@ class Tweet(object):
 
 class Quotes(Tweet):
 	
+
 	""" this class exetnds Tweet class and implements its api_call method  """
 
 	__url =  "http://www.iheartquotes.com/api/v1/random?max_characters=140&show_source=0&show_permalink=0"
@@ -46,6 +48,7 @@ class Quotes(Tweet):
 			return quote
 
 class Lyrics(Tweet):
+
 		
 	"""this class extends Tweet class and impements its api_call method"""
 

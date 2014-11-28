@@ -10,6 +10,7 @@ from random import randint
 
 def tweet_lyrics():
 	
+
 	"""instantiate lyrics class and write tweet """
 	
 	redis_server = redis.Redis('localhost')	
@@ -39,11 +40,14 @@ def tweet_lyrics():
 					 	
 def tweet_quotes():
 
-	"""intantiate quote class and writes tweet """
+
+	"""intantiate quote class and writes tweet"""
 	
 	quote = Quotes()
+	
 	try:
 		quote.write_tweet("\n".join(quote.api_call()))
+	
 	except IOError:
 		print 'cannnot fetch the quote'
 

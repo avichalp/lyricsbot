@@ -6,6 +6,7 @@ from random import randint
 
 def auth():
 	
+
 	""" fetches authentication details from a file. use them to login twitter """
 	
 	CONSUMER_KEY = "..." 
@@ -17,7 +18,8 @@ def auth():
 
 
 def get_random_artist():
-		
+	
+
 	""" choses a random artist from given txt file """
 	
 	artist_list = []
@@ -29,6 +31,7 @@ def get_random_artist():
 
 def create_tweet(raw_lyrics):
 	
+
 	""" crate a tweet of less than or equal to 100 characters  """
 
 	tweet = []
@@ -48,6 +51,7 @@ def create_tweet(raw_lyrics):
 
 def lyrics_tweet_collection(raw_lyrics):
 	
+
 	""" create and put collection of tweets in data store"""
 	
 	redis_server = redis.Redis('localhost')
@@ -60,6 +64,7 @@ def lyrics_tweet_collection(raw_lyrics):
 
 def lyricwikicase(s):
 	
+
 	""" format the artist name to make the url """
 
 	words = s.split()
